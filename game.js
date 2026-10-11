@@ -143,7 +143,7 @@
     var text = 'CricketNation mystery player #' + (today + 1) + ': ' + (daily.won ? n : 'X') + '/' + max +
       (daily.hints ? ' with ' + daily.hints + (daily.hints === 1 ? ' hint' : ' hints') : '') + '\n' +
       R.shareGrid(daily.guesses.map(function (id) { return byId[id]; }), daily.answer, M);
-    var url = (data.meta && data.meta.shareUrl) || '';
+    var url = data.meta && data.meta.siteUrl ? data.meta.siteUrl + 'play/' : '';
     R.share(text, url, function (message, ok) {
       var msg = $('mp-share-msg'), box = $('mp-share-text');
       if (!msg || !box) return;

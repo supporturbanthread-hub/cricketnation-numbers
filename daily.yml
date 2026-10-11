@@ -1,0 +1,81 @@
+name: Daily refresh and deploy
+
+on:
+  schedule:
+    - cron: '10 0 * * *'    # every day at 00:10 UTC
+  workflow_dispatch:         # lets you run it by hand from the Actions tab
+  push:
+    branches: [main]
+    paths-ignore: ['README.md']
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download Cricsheet
+        run: |
+          mkdir -p cricsheet/tests cricsheet/odis cricsheet/t20s
+          curl -fsSL --retry 3 -o tests.zip https://cricsheet.org/downloads/tests_json.zip
+          curl -fsSL --retry 3 -o odis.zip https://cricsheet.org/downloads/odis_json.zip
+          unzip -q -o tests.zip -d cricsheet/tests
+          unzip -q -o odis.zip -d cricsheet/odis
+          # T20 internationals only feed the matchup tool, so a failed download is not fatal
+          if curl -fsSL --retry 3 -o t20s.zip https://cricsheet.org/downloads/t20s_json.zip; then
+            unzip -q -o t20s.zip -d cricsheet/t20s
+          else
+            echo "::warning::The T20 international download failed. T20I matchups are left out of this build."
+          fi
+
+      - name: Refresh record chases
+        run: node refresh.mjs cricsheet
+
+      # The three steps below add the matchup tool and the share pictures.
+      # If one fails, the page is still built and published without that part.
+      - name: Build matchup data
+        continue-on-error: true
+        run: node matchups.mjs cricsheet public/matchups
+
+      - name: Install the picture renderer
+        continue-on-error: true
+        run: npm ci --no-audit --no-fund
+
+      - name: Draw share pictures
+        continue-on-error: true
+        run: node cards.mjs public
+
+      - name: Build pages
+        run: node build.mjs public
+
+      - name: Save refreshed figures to the repo
+        run: |
+          if ! git diff --quiet data.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data.json
+            git commit -m "Refresh figures from Cricsheet"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deploy
+        uses: actions/deploy-pages@v4

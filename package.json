@@ -1,0 +1,11 @@
+{
+  "name": "cricketnation-numbers",
+  "private": true,
+  "description": "CricketNation in numbers: a one-page site rebuilt daily from Cricsheet",
+  "scripts": {
+    "build": "node matchups.mjs cricsheet public/matchups && node cards.mjs public && node build.mjs public"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "2.6.2"
+  }
+}

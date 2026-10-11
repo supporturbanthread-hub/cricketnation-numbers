@@ -1,14 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"{{HTML_ATTRS}}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CricketNation in numbers: records, chases and head-to-heads</title>
-<meta name="description" content="One cricket number a day, a daily guess-the-player game, the records still being chased, and head-to-head comparisons of the greats. From CricketNation.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CricketNation in numbers">
-<meta property="og:description" content="One cricket number a day, a daily guess-the-player game, the records still being chased, and head-to-head comparisons of the greats.">
-<meta name="twitter:card" content="summary_large_image">
+{{HEAD}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;700&family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
@@ -127,6 +122,53 @@ a{color:inherit;text-underline-offset:.2em}
 .bar i.is-lead{background:var(--accent)}
 .verdict{margin:1.25rem 0 0;max-width:38rem;font-size:1.125rem}
 
+.chase-share{display:flex;flex-wrap:wrap;align-items:center;gap:0 1rem;margin:.25rem 0 0}
+.chase-share span{color:var(--muted);font-size:.9375rem}
+.linkbtn{min-height:44px;padding:.4rem 0;border:0;background:transparent;color:var(--ink);font:600 1rem/1.2 var(--body);text-align:left;
+  text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
+
+/* Batter against bowler */
+.mu{max-width:44rem}
+.mu-picks{display:grid;gap:.9rem;margin-top:1.25rem}
+@media (min-width:40rem){.mu-picks{grid-template-columns:1fr 1fr}}
+.mu-field{position:relative;min-width:0}
+.mu-field .mp-input{padding-right:3.25rem}
+.mu-clear{position:absolute;right:4px;bottom:4px;width:44px;height:44px;border:0;border-radius:4px;background:transparent;
+  color:var(--muted);font:400 1.6rem/1 var(--body);cursor:pointer}
+.mu-popular{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:1.1rem}
+.mu-popular:empty{display:none}
+.mu-popular span{margin-right:.25rem;color:var(--muted);font-size:.9375rem}
+.chip{min-height:40px;padding:0 .85rem;border:1.5px solid var(--quiet);border-radius:999px;background:transparent;color:var(--ink);
+  font:600 .9375rem/1 var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--ground)}
+.mu-out{margin-top:1.9rem}
+.mu-vs{margin:0;font:700 clamp(2rem,7vw,3.25rem)/1.08 var(--display);text-wrap:balance}
+.mu-vs i{padding:0 .08em;color:var(--accent-ink);font-style:normal;font-weight:500}
+.mu-list-title{margin:0;font:500 clamp(1.6rem,5vw,2.25rem)/1.12 var(--display);text-wrap:balance}
+.mu-sub{margin:.45rem 0 0;color:var(--muted)}
+.mu-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1.5rem;margin:1.25rem 0 0}
+@media (min-width:36rem){.mu-stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.mu-stats div{padding:.7rem 0 .8rem;border-top:1px solid var(--line)}
+.mu-stats dt{color:var(--muted);font-size:.9375rem}
+.mu-stats dd{margin:.2rem 0 0;font:700 clamp(2rem,6vw,2.75rem)/1 var(--display);font-variant-numeric:tabular-nums}
+.mu-bar{display:flex;gap:3px;height:14px;margin-top:.6rem}
+.mu-bar i{display:block;flex:0 1 0;min-width:3px;height:100%;border-radius:2px}
+.mu-bar .is-dot{background:var(--quiet)}
+.mu-bar .is-run{background:var(--muted)}
+.mu-bar .is-bnd{background:var(--accent)}
+.mu-legend{display:flex;flex-wrap:wrap;gap:.2rem 1.25rem;margin:.65rem 0 0;font-size:.9375rem}
+.mu-legend span::before{content:"";display:inline-block;width:.7em;height:.7em;margin-right:.45em;border-radius:2px;background:var(--quiet)}
+.mu-legend .k-run::before{background:var(--muted)}
+.mu-legend .k-bnd::before{background:var(--accent)}
+.mu-table-wrap{overflow-x:auto;margin-top:1rem}
+.mu-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.mu-table th{padding:.5rem 0 .5rem .75rem;border-bottom:1px solid var(--line);color:var(--muted);font-weight:400;font-size:.9375rem;text-align:right;white-space:nowrap}
+.mu-table td{padding:.1rem 0 .1rem .75rem;border-bottom:1px solid var(--line);text-align:right}
+.mu-table th:first-child,.mu-table td:first-child{padding-left:0;text-align:left}
+.mu-table .linkbtn{white-space:nowrap}
+.mu-msg{margin:0;max-width:36rem}
+.mu-note{margin:1.25rem 0 0;max-width:40rem;color:var(--muted);font-size:.875rem}
+
 /* Mystery player */
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .mp{max-width:44rem;margin-top:1.75rem}
@@ -185,13 +227,46 @@ a{color:inherit;text-underline-offset:.2em}
 
   <main>
     <section class="hero" aria-label="Today’s number">
-      <div id="hero-body" data-idx="{{HERO_IDX}}" aria-live="polite">{{HERO}}</div>
+      <div id="hero-body" data-idx="{{HERO_IDX}}"{{HERO_PIN}} aria-live="polite">{{HERO}}</div>
       <div class="hero-actions">
         <button class="btn btn--solid" id="another" type="button">Show another</button>
         <button class="btn" id="share" type="button">Share this stat</button>
       </div>
       <p class="share-msg" id="share-msg" role="status"></p>
     </section>
+
+    <!--MU-->
+    <section class="band" id="matchups" aria-labelledby="mu-title">
+      <h2 class="band-title" id="mu-title">Batter against bowler</h2>
+      <p class="band-lead">{{MU_LEAD}}</p>
+      <div class="mu">
+        <div class="seg" id="mu-seg" role="group" aria-label="Format">{{MU_SEG}}</div>
+        <div class="mu-picks">
+          <div class="mu-field">
+            <label class="mp-label" for="mu-bat">Batter</label>
+            <input class="mp-input" id="mu-bat" type="text" placeholder="Type a surname, such as Kohli" role="combobox"
+              aria-autocomplete="list" aria-controls="mu-bat-list" aria-expanded="false" autocomplete="off" spellcheck="false" value="{{MU_BAT}}">
+            <button class="mu-clear" id="mu-bat-clear" type="button" aria-label="Clear the batter"{{MU_BAT_CLEAR}}>&times;</button>
+            <ul class="mp-list" id="mu-bat-list" role="listbox" aria-label="Matching batters" hidden></ul>
+          </div>
+          <div class="mu-field">
+            <label class="mp-label" for="mu-bowl">Bowler</label>
+            <input class="mp-input" id="mu-bowl" type="text" placeholder="Type a surname, such as Anderson" role="combobox"
+              aria-autocomplete="list" aria-controls="mu-bowl-list" aria-expanded="false" autocomplete="off" spellcheck="false" value="{{MU_BOWL}}">
+            <button class="mu-clear" id="mu-bowl-clear" type="button" aria-label="Clear the bowler"{{MU_BOWL_CLEAR}}>&times;</button>
+            <ul class="mp-list" id="mu-bowl-list" role="listbox" aria-label="Matching bowlers" hidden></ul>
+          </div>
+        </div>
+        <div class="mu-popular" id="mu-popular">{{MU_POPULAR}}</div>
+        <div class="mu-out" id="mu-out" aria-live="polite">{{MU_OUT}}</div>
+        <div class="mp-actions" id="mu-actions"{{MU_ACTIONS}}>
+          <button class="btn" id="mu-share" type="button">Share this matchup</button>
+        </div>
+        <p class="share-msg" id="mu-share-msg" role="status"></p>
+        <p class="mu-note" id="mu-note">{{MU_NOTE}}</p>
+      </div>
+    </section>
+    <!--/MU-->
 
     <section class="band" id="mystery" aria-labelledby="mp-title">
       <h2 class="band-title" id="mp-title">Guess the mystery player</h2>
@@ -214,10 +289,10 @@ a{color:inherit;text-underline-offset:.2em}
       </div>
     </section>
 
-    <section class="band" aria-labelledby="chase-title">
+    <section class="band" id="chases" aria-labelledby="chase-title">
       <h2 class="band-title" id="chase-title">Still chasing Sachin</h2>
       <p class="band-lead">Sachin Tendulkar retired in 2013 and still holds all three of these records. This is how far away the nearest challengers are.</p>
-      <ul class="chases">{{CHASES}}</ul>
+      <ul class="chases" id="chase-list">{{CHASES}}</ul>
     </section>
 
     <section class="band" aria-labelledby="duel-title">
@@ -259,15 +334,29 @@ a{color:inherit;text-underline-offset:.2em}
     heroEl.setAttribute('data-idx', idx);
     msg.textContent = '';
   }
+  var site = (data.meta && data.meta.siteUrl) || '';
   var today = R.dayIndex(data.numbers.length);
-  if (today !== idx) showNumber(today);
+  /* A page made for one number keeps showing that number. */
+  if (!heroEl.hasAttribute('data-pinned') && today !== idx) showNumber(today);
   document.getElementById('another').addEventListener('click', function () { showNumber(idx + 1); });
 
   document.getElementById('share').addEventListener('click', function () {
     var s = data.numbers[idx];
     var text = s.value + ': ' + s.what + '. ' + s.story;
-    var url = (data.meta && data.meta.shareUrl) || '';
+    var url = site && s.slug ? site + 'number/' + s.slug + '/' : site;
     R.share(text, url, function (message) { msg.textContent = message; });
+  });
+
+  /* Record chases */
+  document.getElementById('chase-list').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button[data-share-chase]') : null;
+    if (!btn) return;
+    var slug = btn.getAttribute('data-share-chase'), out = btn.parentNode.querySelector('span');
+    var c = data.chases.filter(function (x) { return x.slug === slug; })[0];
+    if (!c) return;
+    R.share(R.chaseText(c), site ? site + 'chase/' + slug + '/' : '', function (message, ok) {
+      out.textContent = ok ? message : 'Sharing is blocked here. Copy the address of this page instead.';
+    });
   });
 
   /* Head-to-head */
@@ -300,6 +389,19 @@ a{color:inherit;text-underline-offset:.2em}
 </script>
 <script>
 {{GAME_JS}}
+</script>
+<!--MU-->
+<script>
+{{MATCHUPS_JS}}
+</script>
+<!--/MU-->
+<script>
+/* A link to one stat opens the page at that stat. */
+(function () {
+  var id = document.documentElement.getAttribute('data-focus');
+  var el = id && document.getElementById(id);
+  if (el) el.scrollIntoView();
+})();
 </script>
 </body>
 </html>
