@@ -31,19 +31,39 @@ jobs:
 
       - name: Download Cricsheet
         run: |
-          mkdir -p cricsheet/tests cricsheet/odis
+          mkdir -p cricsheet/tests cricsheet/odis cricsheet/t20s
           curl -fsSL --retry 3 -o tests.zip https://cricsheet.org/downloads/tests_json.zip
           curl -fsSL --retry 3 -o odis.zip https://cricsheet.org/downloads/odis_json.zip
           unzip -q -o tests.zip -d cricsheet/tests
           unzip -q -o odis.zip -d cricsheet/odis
+          if curl -fsSL --retry 3 -o t20s.zip https://cricsheet.org/downloads/t20s_json.zip; then
+            unzip -q -o t20s.zip -d cricsheet/t20s
+          else
+            echo "::warning::The T20 international download failed. T20I matchups are left out of this build."
+          fi
 
-      - name: Refresh figures
+      - name: Refresh record chases
         run: node refresh.mjs cricsheet
 
-      - name: Build page
+      - name: Build matchup data
+        continue-on-error: true
+        run: node matchups.mjs cricsheet public/matchups
+
+      - name: Gather fonts
         run: |
-          mkdir -p public
-          node build.mjs public/index.html
+          mkdir -p fonts
+          cp -n ./*.ttf fonts/ 2>/dev/null || true
+
+      - name: Install the picture renderer
+        continue-on-error: true
+        run: npm ci --no-audit --no-fund
+
+      - name: Draw share pictures
+        continue-on-error: true
+        run: node cards.mjs public
+
+      - name: Build pages
+        run: node build.mjs public
 
       - name: Save refreshed figures to the repo
         run: |
