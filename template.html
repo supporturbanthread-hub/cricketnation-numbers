@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CricketNation in numbers: records, chases and head-to-heads</title>
+<meta name="description" content="One cricket number a day, a daily guess-the-player game, the records still being chased, and head-to-head comparisons of the greats. From CricketNation.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CricketNation in numbers">
+<meta property="og:description" content="One cricket number a day, a daily guess-the-player game, the records still being chased, and head-to-head comparisons of the greats.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;700&family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Tokens: day session (light) by default, under lights (dark) below */
+:root{
+  --ground:#EEF1E6; --raised:#E1E7D5; --ink:#10261F; --muted:#51635A;
+  --line:rgba(16,38,31,.18); --quiet:rgba(16,38,31,.28);
+  --accent:#E8A838; --accent-ink:#855600; --ball:#B3261E;
+  --hit:#1F7A4D; --hit-ink:#FFFFFF; --shade:rgba(16,38,31,.18);
+  --plate:#10261F; --plate-ink:#F4EEDC; --plate-edge:rgba(244,238,220,.14);
+  --display:"Antonio","Arial Narrow","Roboto Condensed","Helvetica Neue",sans-serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E2A23; --raised:#16392F; --ink:#F4EEDC; --muted:#A8BAAE;
+    --line:rgba(244,238,220,.16); --quiet:rgba(244,238,220,.3);
+    --accent-ink:#E8A838; --ball:#DE4B38;
+    --hit:#3DAA6D; --hit-ink:#06140F; --shade:rgba(0,0,0,.45); color-scheme:dark;
+    --plate:#06140F; --plate-edge:rgba(244,238,220,.12);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E2A23; --raised:#16392F; --ink:#F4EEDC; --muted:#A8BAAE;
+  --line:rgba(244,238,220,.16); --quiet:rgba(244,238,220,.3);
+  --accent-ink:#E8A838; --ball:#DE4B38;
+    --hit:#3DAA6D; --hit-ink:#06140F; --shade:rgba(0,0,0,.45); color-scheme:dark;
+  --plate:#06140F; --plate-edge:rgba(244,238,220,.12);
+}
+
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 1.0625rem/1.55 var(--body)}
+a{color:inherit;text-underline-offset:.2em}
+:focus-visible{outline:3px solid var(--accent-ink);outline-offset:3px;border-radius:4px}
+.wrap{max-width:66rem;margin:0 auto;padding:0 1.25rem}
+@media (min-width:48rem){.wrap{padding:0 2.5rem}}
+
+/* Top bar */
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.top h1{margin:0;font:700 1rem/1.2 var(--body);letter-spacing:-.01em}
+.top a{font-weight:600;font-size:.9375rem;white-space:nowrap}
+
+/* Today's number */
+.hero{padding:clamp(2.5rem,8vw,5rem) 0 clamp(2.5rem,7vw,4.5rem)}
+.plates{display:flex;gap:.07em;margin:0 0 .22em;font:700 clamp(4.75rem,23vw,11.5rem)/1 var(--display)}
+.plate{position:relative;flex:none;width:.66em;padding:.14em 0 .07em;text-align:center;
+  background:var(--plate);color:var(--plate-ink);border-radius:.045em;
+  box-shadow:inset 0 0 0 1px var(--plate-edge);
+  transform-origin:50% 0;animation:hang .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*85ms)}
+.plate::before{content:"";position:absolute;top:.05em;left:50%;width:.05em;height:.05em;margin-left:-.025em;border-radius:50%;background:var(--ground)}
+.plate--mark{width:.4em}
+@keyframes hang{
+  from{opacity:0;transform:translateY(-.3em) rotate(-5deg)}
+  60%{opacity:1;transform:translateY(.02em) rotate(1.2deg)}
+  to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){.plate{animation:none}}
+.hero-what{margin:0;max-width:30ch;text-wrap:balance;font:500 clamp(1.75rem,5vw,2.75rem)/1.12 var(--display)}
+.hero-story{margin:.9rem 0 0;max-width:34rem;font-size:1.125rem}
+.hero-when{margin:.5rem 0 0;color:var(--muted);font-size:.9375rem}
+.hero-actions,.mp-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.6rem}
+.btn{display:inline-flex;align-items:center;min-height:46px;padding:0 1.15rem;border:1.5px solid var(--ink);border-radius:6px;
+  background:transparent;color:var(--ink);font:600 1rem/1 var(--body);text-decoration:none;cursor:pointer}
+.btn--solid{background:var(--accent);border-color:var(--accent);color:#10261F}
+.share-msg{min-height:1.5em;margin:.75rem 0 0;color:var(--muted);font-size:.9375rem}
+
+/* Shared section frame */
+.band{padding:clamp(2.5rem,7vw,4.5rem) 0;border-top:1px solid var(--line)}
+.band-title{margin:0;font:500 clamp(2rem,6vw,3.25rem)/1.05 var(--display)}
+.band-lead{margin:.75rem 0 0;max-width:36rem;color:var(--muted)}
+
+/* Record chases */
+.chases{list-style:none;margin:2rem 0 0;padding:0}
+.chase{display:grid;gap:1rem;padding:1.6rem 0;border-top:1px solid var(--line)}
+.chase:last-child{padding-bottom:0}
+@media (min-width:52rem){.chase{grid-template-columns:17rem 1fr;gap:2.5rem;align-items:start}}
+.chase h3{margin:0;font:700 1.125rem/1.25 var(--body)}
+.chase h3 span{display:block;font-weight:400;color:var(--muted)}
+.chase-gap{margin:.5rem 0 0;color:var(--muted)}
+.chase-gap strong{margin-right:.15em;color:var(--ink);font:700 clamp(2.75rem,9vw,4rem)/1 var(--display)}
+.track{position:relative;height:12px;margin-top:.6rem;border-radius:6px;background:var(--raised);box-shadow:inset 0 0 0 1px var(--line)}
+.track-fill{height:100%;border-radius:6px 0 0 6px;background:var(--accent)}
+.track-ball{position:absolute;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;
+  background:linear-gradient(100deg,transparent 43%,rgba(255,255,255,.8) 44% 52%,transparent 53%),var(--ball);
+  box-shadow:0 0 0 3px var(--ground)}
+.track-ends{display:flex;justify-content:space-between;gap:1rem;margin-top:.7rem;font-size:.9375rem;font-variant-numeric:tabular-nums}
+.track-ends span:last-child{text-align:right}
+.chase-pace{margin:.9rem 0 0;max-width:38rem}
+.chase-date{margin:.35rem 0 0;color:var(--muted);font-size:.875rem}
+
+/* Head-to-head */
+.seg{display:inline-flex;margin-top:1.75rem;border:1.5px solid var(--ink);border-radius:6px;overflow:hidden}
+.seg button{min-height:44px;padding:0 1.1rem;border:0;background:transparent;color:var(--ink);font:600 1rem/1 var(--body);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.seg button:focus-visible{outline-offset:-4px}
+.picks{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:.6rem;align-items:center;max-width:44rem;margin-top:1.25rem}
+.picks span{color:var(--muted);font-size:.9375rem}
+.picks select{width:100%;min-height:48px;padding:0 .6rem;border:1.5px solid var(--quiet);border-radius:6px;background:var(--raised);color:var(--ink);font:600 1rem/1.2 var(--body)}
+.duel{max-width:44rem;margin-top:1.25rem}
+.duel-row{padding:.85rem 0;border-bottom:1px solid var(--line)}
+.duel-label{text-align:center;color:var(--muted);font-size:.9375rem}
+.duel-line{display:grid;grid-template-columns:4.75rem minmax(0,1fr) 4.75rem;align-items:center;gap:.5rem;margin-top:.3rem}
+.duel-val{color:var(--muted);font:500 1.5rem/1 var(--display);font-variant-numeric:tabular-nums}
+.duel-val.is-lead{color:var(--ink)}
+.duel-val:last-child{text-align:right}
+.bars{display:flex;gap:3px}
+.bar{display:flex;flex:1;height:12px}
+.bar--l{justify-content:flex-end}
+.bar i{display:block;height:100%;border-radius:2px;background:var(--quiet)}
+.bar i.is-lead{background:var(--accent)}
+.verdict{margin:1.25rem 0 0;max-width:38rem;font-size:1.125rem}
+
+/* Mystery player */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.mp{max-width:44rem;margin-top:1.75rem}
+.mp-form{position:relative}
+.mp-label{display:block;margin-bottom:.4rem;font-weight:700}
+.mp-input{display:block;width:100%;min-height:52px;padding:0 .9rem;border:1.5px solid var(--ink);border-radius:6px;
+  background:var(--raised);color:var(--ink);font:600 1.0625rem/1.2 var(--body)}
+.mp-input::placeholder{color:var(--muted);font-weight:400;opacity:1}
+.mp-list{position:absolute;z-index:5;left:0;right:0;top:calc(100% + 4px);margin:0;padding:.25rem;list-style:none;
+  border:1.5px solid var(--ink);border-radius:6px;background:var(--ground);box-shadow:0 10px 24px var(--shade)}
+.mp-list li{display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px;padding:0 .65rem;
+  border-radius:4px;font-weight:600;cursor:pointer}
+.mp-list li span{color:var(--muted);font-weight:400;font-size:.9375rem;text-align:right}
+.mp-list li[aria-selected="true"]{background:var(--raised)}
+.mp-list li.mp-none{color:var(--muted);font-weight:400;cursor:default}
+.mp-hints{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin-top:.9rem}
+.mp-hints:empty{display:none}
+.mp-hints p{margin:0}
+.mp-verdict{margin:0;font:500 clamp(1.5rem,4.5vw,2.125rem)/1.15 var(--display);text-wrap:balance}
+.mp-streak,.mp-next{margin:.5rem 0 0;color:var(--muted)}
+.mp-next{margin-top:.15rem}
+.mp-share-text{display:block;width:100%;min-height:10rem;margin-top:.5rem;padding:.6rem;border:1.5px solid var(--quiet);
+  border-radius:6px;background:var(--raised);color:var(--ink);font:400 1rem/1.3 var(--body)}
+.mp-cols,.mp-cells{display:grid;grid-template-columns:.9fr .9fr .9fr 1fr 1fr 1.3fr 1fr;gap:4px}
+.mp-cols{margin-top:1.5rem;color:var(--muted);font-size:.8125rem;text-align:center}
+.mp-rows{list-style:none;margin:0;padding:0}
+.mp-row{padding:.7rem 0 .8rem;border-bottom:1px solid var(--line)}
+.mp-name{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:.4rem}
+.mp-name span{color:var(--muted);font-size:.875rem;white-space:nowrap}
+.mp-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:54px;
+  border-radius:4px;background:var(--raised);box-shadow:inset 0 0 0 1px var(--line);
+  font:500 1.0625rem/1 var(--display);font-variant-numeric:tabular-nums}
+.mp-cell b{font-weight:inherit}
+.mp-cell i{margin-top:.2rem;font:700 .8125rem/1 var(--body)}
+.mp-cell.is-hit{background:var(--hit);color:var(--hit-ink);box-shadow:none}
+.mp-cell.is-close{background:var(--accent);color:#10261F;box-shadow:none}
+.mp-row.is-new .mp-cell{animation:turn .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*70ms)}
+@keyframes turn{from{opacity:0;transform:rotateX(85deg)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mp-row.is-new .mp-cell{animation:none}}
+.mp-eg{margin:.6rem 0 0;color:var(--muted);font-size:.9375rem}
+.mp-key{margin:.9rem 0 0;color:var(--muted);font-size:.875rem}
+
+/* Close */
+.end{padding:clamp(2.5rem,7vw,4.5rem) 0 3rem;border-top:1px solid var(--line)}
+.end-pitch{margin:0;max-width:28ch;text-wrap:balance;font:500 clamp(1.75rem,5vw,2.75rem)/1.1 var(--display)}
+.end .btn{margin-top:1.4rem}
+.end-small{margin:2.25rem 0 0;max-width:40rem;color:var(--muted);font-size:.875rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>CricketNation in numbers</h1>
+    <a href="https://cricketnationhq.com/" target="_blank" rel="noopener">Open the app</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Today’s number">
+      <div id="hero-body" data-idx="{{HERO_IDX}}" aria-live="polite">{{HERO}}</div>
+      <div class="hero-actions">
+        <button class="btn btn--solid" id="another" type="button">Show another</button>
+        <button class="btn" id="share" type="button">Share this stat</button>
+      </div>
+      <p class="share-msg" id="share-msg" role="status"></p>
+    </section>
+
+    <section class="band" id="mystery" aria-labelledby="mp-title">
+      <h2 class="band-title" id="mp-title">Guess the mystery player</h2>
+      <p class="band-lead">One Test great is hidden each day and you have {{MP_GUESSES}} guesses. Green is a match, gold is close, and an arrow points towards the answer. Hints unlock after {{MP_HINTS}} guesses.</p>
+      <div class="mp">
+        <div class="mp-form" id="mp-form">
+          <label class="mp-label" for="mp-input" id="mp-status">Guess 1 of {{MP_GUESSES}}</label>
+          <input class="mp-input" id="mp-input" type="text" placeholder="Type a player’s name" role="combobox"
+            aria-autocomplete="list" aria-controls="mp-list" aria-expanded="false"
+            autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="go">
+          <ul class="mp-list" id="mp-list" role="listbox" aria-label="Matching players" hidden></ul>
+        </div>
+        <div class="mp-hints" id="mp-hints"></div>
+        <div class="mp-result" id="mp-result" hidden></div>
+        <div class="mp-cols" id="mp-cols" aria-hidden="true">{{MP_COLS}}</div>
+        <ol class="mp-rows" id="mp-rows">{{MP_EXAMPLE}}</ol>
+        <p class="mp-eg" id="mp-eg">This row is an example, not a clue. It says the answer also bats right-handed and debuted in 1995, has slightly fewer Tests and runs than Ponting, and many more wickets.</p>
+        <p class="mp-key">{{MP_KEY}}</p>
+        <p class="sr-only" id="mp-live" role="status"></p>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="chase-title">
+      <h2 class="band-title" id="chase-title">Still chasing Sachin</h2>
+      <p class="band-lead">Sachin Tendulkar retired in 2013 and still holds all three of these records. This is how far away the nearest challengers are.</p>
+      <ul class="chases">{{CHASES}}</ul>
+    </section>
+
+    <section class="band" aria-labelledby="duel-title">
+      <h2 class="band-title" id="duel-title">Settle the argument</h2>
+      <p class="band-lead">Pick two Test greats and see who leads on each measure.</p>
+      <div class="seg" id="seg" role="group" aria-label="Type of player">{{SEG}}</div>
+      <div class="picks">
+        <select id="pick-a" aria-label="First player">{{OPT_A}}</select>
+        <span>against</span>
+        <select id="pick-b" aria-label="Second player">{{OPT_B}}</select>
+      </div>
+      <div class="duel" id="duel" aria-live="polite">{{DUEL}}</div>
+    </section>
+  </main>
+
+  <footer class="end">
+    <p class="end-pitch">Live scores and deeper stats for every player are in the app.</p>
+    <a class="btn btn--solid" href="https://cricketnationhq.com/" target="_blank" rel="noopener">Open CricketNation</a>
+    <p class="end-small">Career figures for retired players are final. Chase figures are correct to the date shown beside each one, and the pace estimates assume a player keeps scoring at their career rate.</p>
+  </footer>
+</div>
+
+<script type="application/json" id="cn-data">{{DATA}}</script>
+<script>
+{{RENDER_JS}}
+</script>
+<script>
+(function () {
+  var data = JSON.parse(document.getElementById('cn-data').textContent);
+  var R = CNRender;
+
+  /* Today's number */
+  var heroEl = document.getElementById('hero-body');
+  var msg = document.getElementById('share-msg');
+  var idx = Number(heroEl.getAttribute('data-idx')) || 0;
+  function showNumber(i) {
+    idx = (i + data.numbers.length) % data.numbers.length;
+    heroEl.innerHTML = R.hero(data.numbers[idx]);
+    heroEl.setAttribute('data-idx', idx);
+    msg.textContent = '';
+  }
+  var today = R.dayIndex(data.numbers.length);
+  if (today !== idx) showNumber(today);
+  document.getElementById('another').addEventListener('click', function () { showNumber(idx + 1); });
+
+  document.getElementById('share').addEventListener('click', function () {
+    var s = data.numbers[idx];
+    var text = s.value + ': ' + s.what + '. ' + s.story;
+    var url = (data.meta && data.meta.shareUrl) || '';
+    R.share(text, url, function (message) { msg.textContent = message; });
+  });
+
+  /* Head-to-head */
+  var segEl = document.getElementById('seg');
+  var pickA = document.getElementById('pick-a');
+  var pickB = document.getElementById('pick-b');
+  var duelEl = document.getElementById('duel');
+  var pressed = segEl.querySelector('[aria-pressed="true"]');
+  var groupKey = pressed ? pressed.getAttribute('data-group') : Object.keys(data.groups)[0];
+
+  function draw(a, b) {
+    var g = data.groups[groupKey];
+    pickA.innerHTML = R.options(g.players, a, b);
+    pickB.innerHTML = R.options(g.players, b, a);
+    duelEl.innerHTML = R.duel(g, a, b);
+  }
+  segEl.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button[data-group]') : null;
+    if (!btn || btn.getAttribute('data-group') === groupKey) return;
+    groupKey = btn.getAttribute('data-group');
+    segEl.innerHTML = R.seg(data.groups, groupKey);
+    var d = data.groups[groupKey].defaults;
+    draw(d[0], d[1]);
+    var now = segEl.querySelector('[aria-pressed="true"]');
+    if (now) now.focus();
+  });
+  pickA.addEventListener('change', function () { draw(pickA.value, pickB.value); });
+  pickB.addEventListener('change', function () { draw(pickA.value, pickB.value); });
+})();
+</script>
+<script>
+{{GAME_JS}}
+</script>
+</body>
+</html>
